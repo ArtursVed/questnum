@@ -2,7 +2,7 @@ package questnum;
 
 import java.util.Random;
 import java.util.Scanner;
-import javax.swing.*;
+//import javax.swing.*;
 
 public class Main {
     static Random rand = new Random(); // peremennaja rand
@@ -28,9 +28,8 @@ public class Main {
            // System.out.println(i);
             // sravnivaem dannie - cisla
 
-            if (myNum > userNum) {
-                System.out.println("bigger");
-            } else if (myNum <  userNum) {
+            if (myNum > userNum) System.out.println("bigger");
+            else if (myNum <  userNum) {
                 System.out.println("smaller");
             }
             else {
