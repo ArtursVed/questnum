@@ -1,18 +1,23 @@
 package questnum;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 //import javax.swing.*;
 
 public class Main {
     static Random rand = new Random(); // peremennaja rand
     static Scanner scan = new Scanner(System.in);
+    static List<GameResult> results = new ArrayList<>();
 
     public static void main(String[] args) {
 
         String answer;
         do {
+
+            String name;
+            System.out.println("what is your name?");
+            name = scan.next();
+            System.out.println("Hello " + name);
+
             // write your code here
             int myNum = rand.nextInt(100) + 1;
 
@@ -38,12 +43,19 @@ public class Main {
                 } else {
                     System.out.println("good");
                     userLost = false;
+
+                    GameResult r = new GameResult();
+                    r.name = name;
+                    r.triescount = i+1;
+                    results.add(r);
+
                     break; // dlja togo , cto-bi dosrocno zakoncit programmu v slucai viigrasha
                 }
 
             }
             if (userLost == true) {
                 System.out.println("YOU ARE LOOSER");
+
 
                 // mozno i prosto (userLost) , tak kak eto boolen, toest oznacaet ili true ili false
             }
@@ -53,7 +65,17 @@ public class Main {
         }
 
         while (answer.equals("yes"));
+
+        showResults();
+
+
         System.out.println("Good buy");
+    }
+
+    private static void showResults() {
+        for (GameResult r : results){
+            System.out.println(r.name + " --> " + r.triescount);
+        }
     }
 
     static String askYN() {    // v dannom slucae vozvrasaet dannie
