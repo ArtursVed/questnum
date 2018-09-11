@@ -18,6 +18,7 @@ public class Main {
             name = scan.next();
             System.out.println("Hello " + name);
 
+            long t1 = System.currentTimeMillis();
             // write your code here
             int myNum = rand.nextInt(100) + 1;
 
@@ -44,12 +45,19 @@ public class Main {
                     System.out.println("good");
                     userLost = false;
 
+
+
                     GameResult r = new GameResult();
                     r.name = name;
                     r.triescount = i+1;
                     results.add(r);
 
+                    long t2 = System.currentTimeMillis();
+                    long tdt = ((t2 - t1)/1000) ;
+                    System.out.println ("playing time " + tdt + " seconds");
+
                     break; // dlja togo , cto-bi dosrocno zakoncit programmu v slucai viigrasha
+
                 }
 
             }
@@ -69,12 +77,16 @@ public class Main {
         showResults();
 
 
+
         System.out.println("Good buy");
+
+
+
     }
 
     private static void showResults() {
         for (GameResult r : results){
-            System.out.println(r.name + " --> " + r.triescount);
+            System.out.println(r.name + " --> " + r.triescount + "-->" +  r.tdt);
         }
     }
 
