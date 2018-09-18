@@ -1,5 +1,8 @@
 package questnum;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 //import javax.swing.*;
 
@@ -7,10 +10,15 @@ public class Main {
     static Random rand = new Random(); // peremennaja rand
     static Scanner scan = new Scanner(System.in);
     static List<GameResult> results = new ArrayList<>();
+    private static Object loadResults;
 
     public static void main(String[] args) {
 
+
+        loadResults();
+
         String answer;
+
         do {
 
             String name;
@@ -50,12 +58,13 @@ public class Main {
                     GameResult r = new GameResult();
                     r.name = name;
                     r.triescount = i+1;
-                    results.add(r);
+
 
                     long t2 = System.currentTimeMillis();
                     long tdt = ((t2 - t1)/1000) ;
                     System.out.println ("playing time " + tdt + " seconds");
-
+                    r.tdt = tdt;
+                    results.add(r);
                     break; // dlja togo , cto-bi dosrocno zakoncit programmu v slucai viigrasha
 
                 }
@@ -75,7 +84,8 @@ public class Main {
         while (answer.equals("yes"));
 
         showResults();
-
+        saveResults();
+        
 
 
         System.out.println("Good buy");
@@ -83,10 +93,44 @@ public class Main {
 
 
     }
+        // citaem znacenie predidusii i dobovljaem novie
+    private static void loadResults() {
+        File file = new File("top_scores.txt");
+                try(Scanner in = new Scanner(file)){
+
+                    while(in.hasNext()) {
+                        GameResult result = new GameResult();
+                        result.name = in.next();
+                        result.triescount = in.nextInt();
+                        result.tdt = in.nextLong();
+                        results.add(result);
+                    }
+                }
+
+           catch (IOException e){
+                System.out.println("Cannot save the file");
+        }
+    }
+
+    private static void saveResults() {
+        //sozdaem txt fail s rezultatami i vivodim no ne na ekran , a v fail
+        File file = new File("top_scores.txt");
+        // PrintWriter out = null;
+        try (PrintWriter out = new PrintWriter(file)){
+            for (GameResult r : results){
+                out.printf( "%s %d %d\n", r.name, r.triescount, r.tdt );
+            }
+        }catch (IOException e){
+            System.out.println("Cannot save the file");
+        }
+    }
+
+
 
     private static void showResults() {
         for (GameResult r : results){
-            System.out.println(r.name + " --> " + r.triescount + "-->" +  r.tdt);
+            System.out.printf ("%s - %d - %dsec\n", r.name, r.triescount, r.tdt );
+
         }
     }
 
