@@ -104,6 +104,7 @@ public class Main {
                         result.triescount = in.nextInt();
                         result.tdt = in.nextLong();
                         results.add(result);
+                        results.sort(Comparator.comparingInt(r -> r.triescount));
                     }
                 }
 
@@ -127,12 +128,28 @@ public class Main {
 
 
 
-    private static void showResults() {
-        for (GameResult r : results){
-            System.out.printf ("%s - %d - %dsec\n", r.name, r.triescount, r.tdt );
+//    private static void showResults() {
+//        // vivesti tolko 5 znacenij
+//        //int amr = 0;
+//        int count = Math.min(5, results.size());
+//
+//        for (int i = 0;i < count; i++){
+//
+//        GameResult r = results.get(i);
+//
+//            System.out.printf ("%s - %d - %dsec\n", r.name, r.triescount, r.tdt );
+//
+//            }
+//        }
 
-        }
-    }
+    private static void showResults() {
+      results.stream()
+
+              .limit(5)
+              .forEach(r -> {
+                  System.out.printf ("%s - %d - %dsec\n", r.name, r.triescount, r.tdt );
+              });
+      }
 
     static String askYN() {    // v dannom slucae vozvrasaet dannie
         String answer;  // oboznacaem peremennuju
