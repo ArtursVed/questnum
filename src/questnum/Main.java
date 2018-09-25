@@ -143,13 +143,37 @@ public class Main {
 //        }
 
     private static void showResults() {
+        int maxLen = findMaxNameLen(); // pecatat tablicu rezuyltatov kak tablicu
       results.stream()
 
               .limit(5)
               .forEach(r -> {
-                  System.out.printf ("%s - %d - %dsec\n", r.name, r.triescount, r.tdt );
+                  System.out.print(r.name);
+                  for (int i = 0; i < (maxLen - r.name.length()); i++) {
+                      System.out.print("_");
+                  }
+                  System.out.printf("%d - %dsec\n", r.triescount, r.tdt);
               });
       }
+
+//    private static int findMaxNameLen() {
+//        int result = 0;
+//        for (GameResult r: results) {
+//            if(result <r.name.length()){
+//                result = r.name.length();
+//            }
+//        }
+//        return result;
+//    }
+
+      private static int findMaxNameLen() {
+        return results.stream()
+        .map(r -> r.name)
+                  .map(n -> n.length())
+        .max(Comparator.naturalOrder())
+         .get();
+   }
+
 
     static String askYN() {    // v dannom slucae vozvrasaet dannie
         String answer;  // oboznacaem peremennuju
